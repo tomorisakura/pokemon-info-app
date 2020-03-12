@@ -11,6 +11,9 @@ import grevi.msx.poketest.Static.Common
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,12 +33,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchingData() {
-        apiService.getAllPokemon().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe{
-                result-> Common.pokemonList = result.pokemon!!
-                createRecyclerView(Common.pokemonList)
-            }
-
+        GlobalScope.launch(Dispatchers.Main) {
+            apiService.getAllPokemon().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe{
+                        result-> Common.pokemonList = result.pokemon!!
+                    createRecyclerView(Common.pokemonList)
+                }
+        }
     }
 
     private fun createRecyclerView(pokemon: List<Pokemon>) {
