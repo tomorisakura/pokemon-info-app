@@ -26,5 +26,9 @@ class PokemonActivity : AppCompatActivity() {
             .placeholder(R.drawable.ic_launcher_foreground)
             .dontAnimate()
             .into(img_detail)
+        tv_type.text = mObject.type?.get(0).toString()
+        tv_egg.text = mObject.egg
+        tv_height.text = mObject.height
+        tv_weight.text = mObject.weight
     }
 }
