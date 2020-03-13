@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Poke Test</string>
     <string name="status">Pokemon Status</string>
+    <string name="weakness_text">Weakness</string>
+    <string name="candy_text">"Candy "</string>
+    <string name="spawn_text">Spawn</string>
+    <string name="respwan_text">Respawn</string>
+    <string name="save_text">Add to List</string>
 </resources>

@@ -6,4 +6,6 @@ object Common {
     var pokemonList : List<Pokemon> = ArrayList()
     val BASE_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/"
     val IMAGE_URL = "http://www.serebii.net/pokemongo/pokemon/"
+    val evolution = "Evolution"
+    val none_egg = "Not in Eggs"
 }

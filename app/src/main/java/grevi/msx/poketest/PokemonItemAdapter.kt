@@ -47,14 +47,8 @@ class PokemonItemAdapter(private val mContext : Context, private val  pokemonObj
 
                 name_pokemon.text = pokemon.name
                 Glide.with(itemView.context).load(url).placeholder(R.drawable.ic_egg).dontAnimate().into(item_image)
-                level_pokemon.text = pokemon.candy
-                tv_type.text = pokemon.type.toString().replace("[", "").replace("]", "")
+                tv_type.text = "Type : ${pokemon.type.toString().replace("[", "").replace("]", "")}"
                 itemView.setOnClickListener { onItemClickCallback?.onItemClicked(pokemon) }
-                btn_favorite.setOnClickListener {
-                    if (btn_favorite.isPressed) {
-                        Toast.makeText(mContext, "Favorite a ${pokemon.name} " , Toast.LENGTH_SHORT).show()
-                    }
-                }
             }
         }
     }
