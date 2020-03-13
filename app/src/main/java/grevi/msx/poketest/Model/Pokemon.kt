@@ -11,7 +11,7 @@ data class Pokemon(
     @SerializedName("num") val num : String? = null,
     @SerializedName("name") val name : String? = null,
     @SerializedName("img") val img : String? = null,
-    @SerializedName("type") val type : ArrayList<String>? = null,
+    @SerializedName("type") val type : ArrayList<String>,
     @SerializedName("candy") val candy : String? = null,
     @SerializedName("candy_count") val candy_count : Double? = null,
     @SerializedName("height") val height : String? = null,

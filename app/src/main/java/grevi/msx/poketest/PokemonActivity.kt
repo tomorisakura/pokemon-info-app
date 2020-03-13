@@ -23,10 +23,10 @@ class PokemonActivity : AppCompatActivity() {
         val mObject = intent.getParcelableExtra<Pokemon>(POKEMON_OBJECT)
         det_pokemon_name.text = mObject.name
         Glide.with(this).load(Common.IMAGE_URL+mObject.num+".png")
-            .placeholder(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.ic_egg)
             .dontAnimate()
             .into(img_detail)
-        tv_type.text = mObject.type?.get(0).toString()
+        tv_type.text = mObject.type?.toString().replace("[", "").replace("]", "")
         tv_egg.text = mObject.egg
         tv_height.text = mObject.height
         tv_weight.text = mObject.weight

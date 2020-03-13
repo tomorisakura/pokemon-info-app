@@ -46,15 +46,10 @@ class PokemonItemAdapter(private val mContext : Context, private val  pokemonObj
                 val url = "http://www.serebii.net/pokemongo/pokemon/$num.png"
 
                 name_pokemon.text = pokemon.name
-                Glide.with(itemView.context).load(url).placeholder(R.drawable.ic_launcher_foreground).dontAnimate().into(item_image)
+                Glide.with(itemView.context).load(url).placeholder(R.drawable.ic_egg).dontAnimate().into(item_image)
                 level_pokemon.text = pokemon.candy
-                for (i in 0 until pokemon.type!!.size) {
-                    Log.d("type", pokemon.type.get(i))
-                    tv_type.text =  "Type : ${pokemon.type.get(0).toString()}" 
-                }
-
+                tv_type.text = pokemon.type.toString().replace("[", "").replace("]", "")
                 itemView.setOnClickListener { onItemClickCallback?.onItemClicked(pokemon) }
-
                 btn_favorite.setOnClickListener {
                     if (btn_favorite.isPressed) {
                         Toast.makeText(mContext, "Favorite a ${pokemon.name} " , Toast.LENGTH_SHORT).show()
