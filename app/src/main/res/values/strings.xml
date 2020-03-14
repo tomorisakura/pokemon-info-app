@@ -6,4 +6,6 @@
     <string name="spawn_text">Spawn</string>
     <string name="respwan_text">Respawn</string>
     <string name="save_text">Add to List</string>
+    <string name="favo_text">Favorite Pokemon</string>
+    <string name="add_text">Add to Bag</string>
 </resources>

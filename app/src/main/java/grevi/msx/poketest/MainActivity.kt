@@ -3,6 +3,10 @@ package grevi.msx.poketest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import grevi.msx.poketest.Model.Pokemon
 import grevi.msx.poketest.Rest.ApiService
@@ -29,14 +33,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
         fetchingData()
     }
 
     private fun fetchingData() {
+        progressBar(false)
         GlobalScope.launch(Dispatchers.Main) {
             apiService.getAllPokemon().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe{
                         result-> Common.pokemonList = result.pokemon!!
+                    progressBar(true)
                     createRecyclerView(Common.pokemonList)
                 }
         }
@@ -53,6 +60,27 @@ class MainActivity : AppCompatActivity() {
                 setupDetail(mPokemon)
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.item_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.favorite_icon -> Toast.makeText(this, "Favorite Pokemon", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun progressBar(state : Boolean)  {
+        if (state) {
+            main_progress_bar.visibility = View.GONE
+        } else {
+            main_progress_bar.visibility = View.VISIBLE
+        }
     }
 
     private fun setupDetail(pokemon: Pokemon) {
