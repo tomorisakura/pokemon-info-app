@@ -1,4 +1,4 @@
-package grevi.msx.poketest.Model
+package grevi.msx.poketest.mModel
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

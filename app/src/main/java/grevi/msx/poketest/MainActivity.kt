@@ -3,24 +3,28 @@ package grevi.msx.poketest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import grevi.msx.poketest.Model.Pokemon
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import grevi.msx.poketest.mModel.Pokemon
 import grevi.msx.poketest.Rest.ApiService
 import grevi.msx.poketest.Rest.Repository
 import grevi.msx.poketest.Static.Common
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.pokemon_item.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var pokemonAdapter : PokemonItemAdapter
     private var apiService : ApiService
@@ -33,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        swipe_refresh.setOnRefreshListener(this)
         supportActionBar?.hide()
         fetchingData()
     }
@@ -88,4 +93,12 @@ class MainActivity : AppCompatActivity() {
         mIntent.putExtra(PokemonActivity.POKEMON_OBJECT, pokemon)
         startActivity(mIntent)
     }
+
+    override fun onRefresh() {
+        Handler().postDelayed({
+            swipe_refresh.setRefreshing(false)
+        }, 2000)
+    }
+
+
 }

@@ -1,6 +1,6 @@
 package grevi.msx.poketest.Static
 
-import grevi.msx.poketest.Model.Pokemon
+import grevi.msx.poketest.mModel.Pokemon
 
 object Common {
     var pokemonList : List<Pokemon> = ArrayList()

@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
-import grevi.msx.poketest.Model.Pokemon
+import grevi.msx.poketest.mModel.Pokemon
 import grevi.msx.poketest.Static.Common
+import grevi.msx.poketest.databinding.ActivityPokemonBinding
 import kotlinx.android.synthetic.main.activity_pokemon.*
 
 class PokemonActivity : AppCompatActivity(), View.OnClickListener {
@@ -28,24 +30,14 @@ class PokemonActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setupDetail() {
         val mObject = intent.getParcelableExtra<Pokemon>(POKEMON_OBJECT)
-        pokemonName = mObject?.name
-        det_pokemon_name.text = mObject?.name
+        val mBinding : ActivityPokemonBinding = DataBindingUtil.setContentView(this, R.layout.activity_pokemon)
         Glide.with(this).load(Common.IMAGE_URL+mObject?.num+".png")
             .placeholder(R.drawable.ic_egg)
             .dontAnimate()
             .into(img_detail)
+        mBinding.setVariable(BR.mDataPokemon, mObject)
+        mBinding.executePendingBindings()
         tv_type.text = mObject?.type.toString().replace("[", "").replace("]", "")
-        if (mObject?.egg == Common.none_egg) {
-            tv_egg.text = Common.evolution
-        } else {
-            tv_egg.text = mObject?.egg
-        }
-        tv_candy_count.text = mObject?.candy_count.toString()
-        tv_candy.text = mObject?.candy
-        tv_spawn.text = mObject?.avg_spawns.toString()
-        tv_spawn_time.text = mObject?.spawn_time
-        tv_height.text = mObject?.height
-        tv_weight.text = mObject?.weight
         tv_weakness.text = mObject?.weak.toString().replace("[","").replace("]", "")
     }
 

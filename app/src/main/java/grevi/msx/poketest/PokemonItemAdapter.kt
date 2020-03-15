@@ -5,10 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import grevi.msx.poketest.Model.Pokemon
+import grevi.msx.poketest.mModel.Pokemon
 import kotlinx.android.synthetic.main.pokemon_item.view.*
 
 class PokemonItemAdapter(private val mContext : Context, private val  pokemonObj : List<Pokemon>) : RecyclerView.Adapter<PokemonItemAdapter.PokemonViewHolder>() {
