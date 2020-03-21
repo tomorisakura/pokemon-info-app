@@ -1,16 +1,17 @@
 package grevi.msx.poketest
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import grevi.msx.poketest.mModel.Pokemon
 import grevi.msx.poketest.Rest.ApiService
 import grevi.msx.poketest.Rest.Repository
@@ -18,13 +19,12 @@ import grevi.msx.poketest.Static.Common
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.pokemon_item.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var pokemonAdapter : PokemonItemAdapter
     private var apiService : ApiService
@@ -34,11 +34,15 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         apiService = retrofit
     }
 
+    companion object {
+        var MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 10
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        swipe_refresh.setOnRefreshListener(this)
         supportActionBar?.hide()
+        checkPermission()
         fetchingData()
     }
 
@@ -65,6 +69,19 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
                 setupDetail(mPokemon)
             }
         })
+    }
+
+    private fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            //is not granted
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE)
+            }
+        } else {
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -94,11 +111,16 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         startActivity(mIntent)
     }
 
-    override fun onRefresh() {
-        Handler().postDelayed({
-            swipe_refresh.setRefreshing(false)
-        }, 2000)
+    override fun onClick(p0: View?) {
+        when(p0?.id) {
+            R.id.favorite_icon -> {
+                setToast("Icon dklik")
+            }
+        }
     }
 
+    private fun setToast(message : String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
 }

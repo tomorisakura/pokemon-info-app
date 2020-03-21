@@ -4,7 +4,7 @@
     <group android:visible="true" android:menuCategory="container">
         <item android:id="@+id/favorite_icon"
             android:title="@string/favo_text"
-            android:icon="@drawable/ic_pokecoin"
+            android:icon="@drawable/ic_favorite"
             app:showAsAction="always"/>
     </group>
 </menu>

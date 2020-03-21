@@ -46,7 +46,7 @@ class PokemonItemAdapter(private val mContext : Context, private val  pokemonObj
 
                 name_pokemon.text = pokemon.name
                 Glide.with(itemView.context).load(url).placeholder(R.drawable.ic_egg).dontAnimate().into(item_image)
-                tv_type.text = "Type : ${pokemon.type.toString().replace("[", "").replace("]", "")}"
+                tv_type.text = pokemon.type.toString().replace("[", "").replace("]", "")
                 itemView.setOnClickListener { onItemClickCallback?.onItemClicked(pokemon) }
             }
         }
