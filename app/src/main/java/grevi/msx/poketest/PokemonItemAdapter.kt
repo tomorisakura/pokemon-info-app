@@ -45,7 +45,7 @@ class PokemonItemAdapter(private val mContext : Context, private val  pokemonObj
                 val url = "http://www.serebii.net/pokemongo/pokemon/$num.png"
 
                 name_pokemon.text = pokemon.name
-                Glide.with(itemView.context).load(url).placeholder(R.drawable.ic_egg).dontAnimate().into(item_image)
+                Glide.with(itemView.context).load(url).placeholder(R.drawable.ic_egg).override(120 , 120).dontAnimate().into(item_image)
                 tv_type.text = pokemon.type.toString().replace("[", "").replace("]", "")
                 itemView.setOnClickListener { onItemClickCallback?.onItemClicked(pokemon) }
             }

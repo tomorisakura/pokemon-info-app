@@ -4,25 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/swipe_refresh"
-    android:layout_gravity="center"
-    tools:context=".MainActivity">
+    tools:context=".View.FavoriteActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/app_name"
+        android:id="@+id/tv_blk"
+        android:layout_marginTop="70dp"
+        android:textColor="@color/colorBlack"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_pokemon_item"
-        tools:listitem="@layout/pokemon_item"
+        android:id="@+id/rv_pokemon_favorite"
+        tools:listitem="@layout/favorite_list"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-    <ProgressBar
-        android:verticalScrollbarPosition="defaultPosition"
-        android:id="@+id/main_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminateDrawable="@drawable/progress"
-        android:visibility="visible"
-        android:layout_gravity="center"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -30,10 +27,9 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/toolbar_material"
-            app:title="@string/app_name"
+            android:id="@+id/toolbar_favorite"
+            app:title="@string/favorite_pokemon"
             app:titleTextColor="@color/colorWhite"
-            app:menu="@menu/item_menu"
             app:layout_scrollFlags="scroll|enterAlways">
         </androidx.appcompat.widget.Toolbar>
 

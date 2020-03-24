@@ -5,17 +5,22 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.database.FirebaseDatabase
 import grevi.msx.poketest.mModel.Pokemon
 import grevi.msx.poketest.Rest.ApiService
 import grevi.msx.poketest.Rest.Repository
 import grevi.msx.poketest.Static.Common
+import grevi.msx.poketest.View.FavoriteActivity
+import grevi.msx.poketest.View.PokemonActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,7 +29,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var pokemonAdapter : PokemonItemAdapter
     private var apiService : ApiService
@@ -36,14 +41,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         var MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 10
+        var MY_PERMISSIONS_NETWORK_ACCESS = 101
+        val PERMISSION = "permission"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-        checkPermission()
+        val toolbar : Toolbar = findViewById(R.id.toolbar_material)
+        setSupportActionBar(toolbar)
+        checkStoragePermission()
         fetchingData()
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Helo Salamandr !")
     }
 
     private fun fetchingData() {
@@ -71,16 +85,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    private fun checkPermission() {
+    private fun checkStoragePermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             //is not granted
+            Log.d(PERMISSION, "permission deny")
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE)
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.INTERNET), MY_PERMISSIONS_NETWORK_ACCESS)
             }
         } else {
-
+            Log.d(PERMISSION, "permission granted")
         }
     }
 
@@ -92,7 +108,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.favorite_icon -> Toast.makeText(this, "Favorite Pokemon", Toast.LENGTH_SHORT).show()
+            R.id.favorite_icon -> {
+                val mIntent = Intent(this, FavoriteActivity::class.java)
+                startActivity(mIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -109,14 +128,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val mIntent = Intent(this, PokemonActivity::class.java)
         mIntent.putExtra(PokemonActivity.POKEMON_OBJECT, pokemon)
         startActivity(mIntent)
-    }
-
-    override fun onClick(p0: View?) {
-        when(p0?.id) {
-            R.id.favorite_icon -> {
-                setToast("Icon dklik")
-            }
-        }
     }
 
     private fun setToast(message : String) {
