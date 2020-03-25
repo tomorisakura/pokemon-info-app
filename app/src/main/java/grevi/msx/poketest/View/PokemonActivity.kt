@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -49,10 +48,6 @@ class PokemonActivity : AppCompatActivity(), View.OnClickListener {
         tv_type.text = mObject?.type.toString().replace("[", "").replace("]", "")
         tv_weakness.text = mObject?.weak.toString().replace("[","").replace("]", "")
         pokemonName = mObject?.name
-    }
-
-    private fun setToast(message : String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setSnackBar(message: String) {

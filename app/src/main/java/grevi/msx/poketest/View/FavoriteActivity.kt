@@ -39,9 +39,8 @@ class FavoriteActivity : AppCompatActivity() {
         rv_pokemon_favorite.adapter = p_adapter
         p_adapter.setOnItemClickCallBack(object : FavoritePokemonAdapter.OnItemClickCallBack {
             override fun onItemClicked(mFav: FavoritePokemon) {
-
+                setDetailFav(mFav)
             }
-
         })
     }
 
