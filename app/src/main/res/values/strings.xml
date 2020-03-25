@@ -9,4 +9,5 @@
     <string name="favo_text">Favorite Pokemon</string>
     <string name="add_text">Add to Bag</string>
     <string name="favorite_pokemon">Favorite Pokemon</string>
+    <string name="mark_text">Mark This Pokemon</string>
 </resources>

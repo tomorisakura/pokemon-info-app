@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/swipe_refresh"
     android:layout_gravity="center"
-    tools:context=".MainActivity">
+    tools:context=".View.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

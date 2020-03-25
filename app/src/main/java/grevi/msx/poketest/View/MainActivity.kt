@@ -1,4 +1,4 @@
-package grevi.msx.poketest
+package grevi.msx.poketest.View
 
 import android.Manifest
 import android.content.Intent
@@ -15,12 +15,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.database.FirebaseDatabase
+import grevi.msx.poketest.R
 import grevi.msx.poketest.mModel.Pokemon
 import grevi.msx.poketest.Rest.ApiService
 import grevi.msx.poketest.Rest.Repository
 import grevi.msx.poketest.Static.Common
-import grevi.msx.poketest.View.FavoriteActivity
-import grevi.msx.poketest.View.PokemonActivity
+import grevi.msx.poketest.View.Adapter.PokemonItemAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -74,11 +74,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun createRecyclerView(pokemon: List<Pokemon>) {
         rv_pokemon_item.layoutManager = GridLayoutManager(this, 2)
-        pokemonAdapter = PokemonItemAdapter(this, pokemon)
+        pokemonAdapter =
+            PokemonItemAdapter(this, pokemon)
         pokemonAdapter.notifyDataSetChanged()
         rv_pokemon_item.adapter = pokemonAdapter
 
-        pokemonAdapter.setOnItemClickCallback(object : PokemonItemAdapter.OnItemClickCallback {
+        pokemonAdapter.setOnItemClickCallback(object :
+            PokemonItemAdapter.OnItemClickCallback {
             override fun onItemClicked(mPokemon: Pokemon) {
                 setupDetail(mPokemon)
             }
@@ -92,8 +94,12 @@ class MainActivity : AppCompatActivity() {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
             } else {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE)
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.INTERNET), MY_PERMISSIONS_NETWORK_ACCESS)
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                )
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.INTERNET),
+                    MY_PERMISSIONS_NETWORK_ACCESS
+                )
             }
         } else {
             Log.d(PERMISSION, "permission granted")

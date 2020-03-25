@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.FirebaseError
 import com.google.firebase.database.*
 import grevi.msx.poketest.BR
 import grevi.msx.poketest.R
@@ -77,7 +76,6 @@ class PokemonActivity : AppCompatActivity(), View.OnClickListener {
         val datasRefrences = datas.getReference("favorite_list")
         datasRefrences.addValueEventListener( object : ValueEventListener {
             val mDataRef = datasRefrences.child("pokemon_${mObject?.num}")
-            val removeRef : Query = mDataRef.ref.orderByChild("pokemon_num").equalTo(mObject?.num)
 
             override fun onCancelled(p0: DatabaseError) {
                 try {
@@ -105,6 +103,14 @@ class PokemonActivity : AppCompatActivity(), View.OnClickListener {
                 mDataRef.child("image_url").setValue(Common.IMAGE_URL+mObject?.num+".png")
                 mDataRef.child("pokemon_candy").setValue(mObject?.candy)
                 mDataRef.child("pokemon_type").setValue(mObject?.type)
+                mDataRef.child("pokemon_candy_count").setValue(mObject?.candy_count)
+                mDataRef.child("pokemon_egg").setValue(mObject?.egg)
+                mDataRef.child("pokemon_avg_spawn").setValue(mObject?.avg_spawns)
+                mDataRef.child("pokemon_spawn_chance").setValue(mObject?.spawn_chance)
+                mDataRef.child("pokemon_spawn_time").setValue(mObject?.spawn_time)
+                mDataRef.child("pokemon_height").setValue(mObject?.height)
+                mDataRef.child("pokemon_weight").setValue(mObject?.weight)
+                mDataRef.child("pokemon_weakness").setValue(mObject?.weak)
                 setSnackBar("${mObject?.name} ditambahkan ke dalam bag !")
                 delay(1000)
             }
