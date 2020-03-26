@@ -48,7 +48,7 @@ class FavoriteActivity : AppCompatActivity() {
         val mDatas = FirebaseDatabase.getInstance().reference.child("favorite_list")
         mDatas.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Log.e(Common.FB_FAIL, "Failed")
+                setSnackBar(p0.message)
             }
 
             override fun onDataChange(p0: DataSnapshot) {

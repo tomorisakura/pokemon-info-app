@@ -69,15 +69,11 @@ class PokemonActivity : AppCompatActivity(), View.OnClickListener {
         val mObject = intent.getParcelableExtra<Pokemon>(POKEMON_OBJECT)
         val datas = FirebaseDatabase.getInstance()
         val datasRefrences = datas.getReference("favorite_list")
-        datasRefrences.addValueEventListener( object : ValueEventListener {
-            val mDataRef = datasRefrences.child("pokemon_${mObject?.num}")
+        val mDataRef = datasRefrences.child("pokemon_${mObject?.num}")
+        datasRefrences.addListenerForSingleValueEvent( object : ValueEventListener {
 
             override fun onCancelled(p0: DatabaseError) {
-                try {
-                    setSnackBar("Failed 404")
-                } catch (e : Exception) {
-                    Log.d(Common.FB_FAIL, e.message.toString())
-                }
+                Log.e(Common.FB_FAIL, p0.message)
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -85,14 +81,16 @@ class PokemonActivity : AppCompatActivity(), View.OnClickListener {
                     GlobalScope.launch(Dispatchers.Main) {
                         addPokemon()
                     }
+                    setSnackBar("Pokemon ${mObject?.name} Ditambahkan")
                 } else {
-                    if (p0.exists()) {
-                        setSnackBar("Pokemon Sudah Ditambahkan")
+                    GlobalScope.launch(Dispatchers.IO) {
+                        deleteDatas()
                     }
                 }
             }
 
             private suspend fun addPokemon() {
+                delay(1000L)
                 mDataRef.child("pokemon_num").setValue(mObject?.num)
                 mDataRef.child("pokemon_name").setValue(mObject?.name)
                 mDataRef.child("image_url").setValue(Common.IMAGE_URL+mObject?.num+".png")
@@ -106,8 +104,12 @@ class PokemonActivity : AppCompatActivity(), View.OnClickListener {
                 mDataRef.child("pokemon_height").setValue(mObject?.height)
                 mDataRef.child("pokemon_weight").setValue(mObject?.weight)
                 mDataRef.child("pokemon_weakness").setValue(mObject?.weak)
-                setSnackBar("${mObject?.name} ditambahkan ke dalam bag !")
-                delay(1000)
+            }
+
+            private suspend fun deleteDatas() {
+                delay(1000L)
+                mDataRef.removeValue()
+                setSnackBar("Pokemon Telah Dihapus Dari List !")
             }
         })
     }
