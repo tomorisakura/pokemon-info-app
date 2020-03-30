@@ -1,7 +1,7 @@
 # pokemon-info-app
 try retrofit with rx
 
-![](https://i.imgur.com/i4MLJY7l.gif)
+[Preview](https://imgur.com/i4MLJY7)
 
 <b>what i use ?</b>
 <ul>
